@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	 xmlns:PO="http://www.tibco.com/bwp/schemas/purchaseorder"
+	 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 targetNamespace="http://www.tibco.com/bwp/schemas/purchaseorder"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<element name="PurchaseOrder">
+		<complexType>
+			<sequence>
+				<element name="CustomerID" type="xsd:string"/>
+				<element name="OrderDate" type="xsd:string"/>
+				<element name="ShipmentDate" type="xsd:string"/>
+				<element name="ShipmentLocation" type="xsd:string"/>
+				<element name="DeliveryMethod" type="xsd:integer"/>
+				<element name="Priority" type="xsd:string"/>
+				<element name="LineItem" maxOccurs="unbounded">
+					<complexType>
+						<sequence>
+							<element name="Item" type="xsd:string"/>
+							<element name="Quantity" type="xsd:integer"/>
+							<element name="UnitPrice" type="xsd:decimal"/>
+						</sequence>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="PurchaseOrderResult">
+		<complexType>
+			<sequence>
+				<element name="CustomerID" type="xsd:string"/>
+				<element name="OrderDate" type="xsd:string"/>
+				<element name="ShipmentDate" type="xsd:string"/>
+				<element name="ShipmentLocation" type="xsd:string"/>
+				<element name="DeliveryMethod" type="xsd:integer"/>
+				<element name="Priority" type="xsd:string"/>
+				<element name="LineItem" maxOccurs="unbounded">
+					<complexType>
+						<sequence>
+							<element name="Item" type="xsd:string"/>
+							<element name="TotalPrice" type="xsd:decimal"/>
+						</sequence>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+</schema>

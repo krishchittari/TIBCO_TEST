@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.example.com/1489747740517" xmlns:ns0="http://www.tibco.com/bwp/schemas/purchaseorder" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Untitled" targetNamespace="http://xmlns.example.com/1489747740517">
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:PO="http://www.tibco.com/bwp/schemas/purchaseorder" targetNamespace="http://www.tibco.com/bwp/schemas/purchaseorder" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <element name="PurchaseOrder">
+                <complexType>
+                    <sequence>
+                        <element name="CustomerID" type="xsd:string"/>
+                        <element name="OrderDate" type="xsd:string"/>
+                        <element name="ShipmentDate" type="xsd:string"/>
+                        <element name="ShipmentLocation" type="xsd:string"/>
+                        <element name="DeliveryMethod" type="xsd:integer"/>
+                        <element name="Priority" type="xsd:string"/>
+                        <element name="LineItem" maxOccurs="unbounded">
+                            <complexType>
+                                <sequence>
+                                    <element name="Item" type="xsd:string"/>
+                                    <element name="Quantity" type="xsd:integer"/>
+                                    <element name="UnitPrice" type="xsd:decimal"/>
+                                </sequence>
+                            </complexType>
+                        </element>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="PurchaseOrderResult">
+                <complexType>
+                    <sequence>
+                        <element name="CustomerID" type="xsd:string"/>
+                        <element name="OrderDate" type="xsd:string"/>
+                        <element name="ShipmentDate" type="xsd:string"/>
+                        <element name="ShipmentLocation" type="xsd:string"/>
+                        <element name="DeliveryMethod" type="xsd:integer"/>
+                        <element name="Priority" type="xsd:string"/>
+                        <element name="LineItem" maxOccurs="unbounded">
+                            <complexType>
+                                <sequence>
+                                    <element name="Item" type="xsd:string"/>
+                                    <element name="TotalPrice" type="xsd:decimal"/>
+                                </sequence>
+                            </complexType>
+                        </element>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+    </wsdl:types>
+    <wsdl:service name="Service">
+        <wsdl:port name="PortTypeEndpoint1" binding="tns:PortTypeEndpoint1Binding">
+            <soap:address location="http://localhost:8181/Service/Service.serviceagent/PortTypeEndpoint1"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="PortType">
+        <wsdl:operation name="TotalOrderValue">
+            <wsdl:input message="tns:OrderInput"/>
+            <wsdl:output message="tns:OrderOutput"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PortTypeEndpoint1Binding" type="tns:PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="TotalOrderValue">
+            <soap:operation style="document" soapAction="/Service/Service.serviceagent/PortTypeEndpoint1/TotalOrderValue"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="OrderInput"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="OrderOutput"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="OrderInput">
+        <wsdl:part name="OrderInput" element="ns0:PurchaseOrder"/>
+    </wsdl:message>
+    <wsdl:message name="OrderOutput">
+        <wsdl:part name="OrderOutput" element="ns0:PurchaseOrderResult"/>
+    </wsdl:message>
+</wsdl:definitions>

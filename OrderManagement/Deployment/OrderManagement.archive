@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002">
+    <enterpriseArchive>
+        <sharedArchive name="Shared Archive">
+            <resourceType>shared.archive.resource</resourceType>
+            <authorProperty>shkhan</authorProperty>
+        </sharedArchive>
+        <processArchive name="Process Archive">
+            <resourceType>process.archive.resource</resourceType>
+            <authorProperty>shkhan</authorProperty>
+            <processProperty>/Service/Service.serviceagent</processProperty>
+        </processArchive>
+        <versionProperty>5</versionProperty>
+        <authorProperty>shkhan</authorProperty>
+        <addServiceSettableGvars>false</addServiceSettableGvars>
+        <name>OrderManagement</name>
+        <designer>
+            <lockedProperties/>
+            <fixedChildren/>
+            <resourceDescriptions/>
+        </designer>
+        <fileLocationProperty>C:\Jenkins\OrderManagement.ear</fileLocationProperty>
+    </enterpriseArchive>
+</Repository:repository>

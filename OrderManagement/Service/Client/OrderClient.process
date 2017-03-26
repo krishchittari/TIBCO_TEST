@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://xmlns.example.com/1489747740517" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/bwp/schemas/purchaseorder">
+    <wsdl:import namespace="http://xmlns.example.com/1489747740517" location="/Shared/WSDL/ConcreteOrderManagement.wsdl"/>
+    <pd:name>Service/Client/OrderClient.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>150</pd:startX>
+    <pd:startY>118</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>450</pd:endX>
+    <pd:endY>118</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1489750471308</pd:targetNamespace>
+    <pd:activity name="SOAPRequestReply">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>298</pd:x>
+        <pd:y>118</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:Service</service>
+            <servicePort>PortTypeEndpoint1</servicePort>
+            <operation>TotalOrderValue</operation>
+            <soapAction>/Service/Service.serviceagent/PortTypeEndpoint1/TotalOrderValue</soapAction>
+            <endpointURL>http://localhost:8181/Service/Service.serviceagent/PortTypeEndpoint1</endpointURL>
+            <authScheme>NONE</authScheme>
+            <useProxy>false</useProxy>
+            <requireBasicAuth>false</requireBasicAuth>
+            <basicHttpAuthIdentity/>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns:PurchaseOrder>
+                    <ns:CustomerID>
+                        <xsl:value-of select="&quot;1234123412341234&quot;"/>
+                    </ns:CustomerID>
+                    <ns:OrderDate>
+                        <xsl:value-of select="&quot;2017-03-27&quot;"/>
+                    </ns:OrderDate>
+                    <ns:ShipmentDate>
+                        <xsl:value-of select="&quot;2017-03-28&quot;"/>
+                    </ns:ShipmentDate>
+                    <ns:ShipmentLocation>
+                        <xsl:value-of select="&quot;Mumbai&quot;"/>
+                    </ns:ShipmentLocation>
+                    <ns:DeliveryMethod>
+                        <xsl:value-of select="1"/>
+                    </ns:DeliveryMethod>
+                    <ns:Priority>
+                        <xsl:value-of select="&quot;High&quot;"/>
+                    </ns:Priority>
+                    <ns:LineItem>
+                        <ns:Item>
+                            <xsl:value-of select="10001"/>
+                        </ns:Item>
+                        <ns:Quantity>
+                            <xsl:value-of select="20"/>
+                        </ns:Quantity>
+                        <ns:UnitPrice>
+                            <xsl:value-of select="300"/>
+                        </ns:UnitPrice>
+                    </ns:LineItem>
+                    <ns:LineItem>
+                        <ns:Item>
+                            <xsl:value-of select="10002"/>
+                        </ns:Item>
+                        <ns:Quantity>
+                            <xsl:value-of select="10"/>
+                        </ns:Quantity>
+                        <ns:UnitPrice>
+                            <xsl:value-of select="100"/>
+                        </ns:UnitPrice>
+                    </ns:LineItem>
+                    <ns:LineItem>
+                        <ns:Item>
+                            <xsl:value-of select="10003"/>
+                        </ns:Item>
+                        <ns:Quantity>
+                            <xsl:value-of select="50"/>
+                        </ns:Quantity>
+                        <ns:UnitPrice>
+                            <xsl:value-of select="500"/>
+                        </ns:UnitPrice>
+                    </ns:LineItem>
+                </ns:PurchaseOrder>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>SOAPRequestReply</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SOAPRequestReply</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

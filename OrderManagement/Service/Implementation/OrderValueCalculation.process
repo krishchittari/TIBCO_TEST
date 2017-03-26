@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://xmlns.example.com/1489747678914" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns="http://www.tibco.com/bwp/schemas/purchaseorder" xmlns:pfx3="http://xmlns.example.com/1489752189084" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/bwp/schemas/opresult" xmlns:ns3="http://www.tibco.com/pe/WriteToLogActivitySchema">
+    <xsd:import namespace="http://www.tibco.com/bwp/schemas/purchaseorder" schemaLocation="/Shared/Schema/PurchaseOrderSchema.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1489747678914" location="/Shared/WSDL/12321.wsdl"/>
+    <wsdl:import namespace="http://xmlns.example.com/1489752189084" location="/Shared/WSDL/OrderManagement.wsdl"/>
+    <pd:name>Service/Implementation/OrderValueCalculation.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx3:OrderInput"/>
+    <pd:startX>152</pd:startX>
+    <pd:startY>142</pd:startY>
+    <pd:returnBindings>
+        <pfx3:OrderOutput>
+            <OrderOutput>
+                <ns:PurchaseOrderResult>
+                    <ns:CustomerID>
+                        <xsl:value-of select="$Start/pfx3:OrderInput/OrderInput/ns:PurchaseOrder/ns:CustomerID"/>
+                    </ns:CustomerID>
+                    <ns:OrderDate>
+                        <xsl:value-of select="$Start/pfx3:OrderInput/OrderInput/ns:PurchaseOrder/ns:OrderDate"/>
+                    </ns:OrderDate>
+                    <ns:ShipmentDate>
+                        <xsl:value-of select="$Start/pfx3:OrderInput/OrderInput/ns:PurchaseOrder/ns:ShipmentDate"/>
+                    </ns:ShipmentDate>
+                    <ns:ShipmentLocation>
+                        <xsl:value-of select="$Start/pfx3:OrderInput/OrderInput/ns:PurchaseOrder/ns:ShipmentLocation"/>
+                    </ns:ShipmentLocation>
+                    <ns:DeliveryMethod>
+                        <xsl:value-of select="$Start/pfx3:OrderInput/OrderInput/ns:PurchaseOrder/ns:DeliveryMethod"/>
+                    </ns:DeliveryMethod>
+                    <ns:Priority>
+                        <xsl:value-of select="$Start/pfx3:OrderInput/OrderInput/ns:PurchaseOrder/ns:Priority"/>
+                    </ns:Priority>
+                    <xsl:for-each select="$Start/pfx3:OrderInput/OrderInput/ns:PurchaseOrder/ns:LineItem">
+                        <ns:LineItem>
+                            <ns:Item>
+                                <xsl:value-of select="ns:Item"/>
+                            </ns:Item>
+                            <ns:TotalPrice>
+                                <xsl:value-of select="ns:Quantity*ns:UnitPrice"/>
+                            </ns:TotalPrice>
+                        </ns:LineItem>
+                    </xsl:for-each>
+                </ns:PurchaseOrderResult>
+            </OrderOutput>
+        </pfx3:OrderOutput>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="pfx3:OrderOutput"/>
+    <pd:endX>639</pd:endX>
+    <pd:endY>142</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1489747571990</pd:targetNamespace>
+    <pd:activity name="Log">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>397</pd:x>
+        <pd:y>129</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <ns3:ActivityInput>
+                <message>
+                    <xsl:value-of select="concat(&quot;I got this at : &quot;,current-dateTime())"/>
+                </message>
+            </ns3:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Log</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>
